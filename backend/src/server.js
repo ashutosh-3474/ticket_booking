@@ -2,8 +2,10 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const connectDB = require("./config/db");
-const authRoutes = require("./routes/auth");
-const cinemaRoutes = require("./routes/getCinema");
+const authRoutes = require("./routes/authRoutes");
+const cinemaRoutes = require("./routes/cinemaRoutes");
+const movieRoutes = require("./routes/movieRoutes");
+const showRoutes = require("./routes/showRoutes");
 
 // Connect DB
 connectDB();
@@ -20,7 +22,9 @@ app.get("/", (req, res) => {
   res.send("Movie Booking API is running...");
 });
 app.use("/api/auth", authRoutes);
-app.use("/api/getcinemas", cinemaRoutes);
+app.use("/api/cinemas", cinemaRoutes);
+app.use("/api/movies", movieRoutes);
+app.use("/api/shows", showRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
