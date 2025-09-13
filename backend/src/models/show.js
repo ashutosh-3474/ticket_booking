@@ -1,8 +1,7 @@
 const mongoose = require("mongoose");
 
 const seatSchema = new mongoose.Schema({
-  row: Number,
-  col: Number,
+  seatNumber: { type: Number },
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User" }, // only for reservedSeats
   reservedAt: { type: Date, default: Date.now },                // for timeout
 });
@@ -12,7 +11,7 @@ const showSchema = new mongoose.Schema({
   movieId: { type: mongoose.Schema.Types.ObjectId, ref: "Movie", required: true },
   screenNumber: { type: Number, required: true },
   startTime: { type: Date, required: true },
-  bookedSeats: [ { row: Number, col: Number } ],
+  bookedSeats: [ { seatNumber: Number } ],
   reservedSeats: [ seatSchema ]
 });
 
