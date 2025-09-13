@@ -30,7 +30,7 @@ export default function Signup() {
       localStorage.setItem("user", JSON.stringify(res.data))
 
       // redirect to home
-      navigate("/")
+      navigate("/cinemas")
     } catch (err) {
       console.error("Signup Error:", err.response?.data?.message || err.message)
       setError(err.response?.data?.message || "Something went wrong")

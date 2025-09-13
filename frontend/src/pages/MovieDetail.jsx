@@ -77,7 +77,7 @@ export default function MovieDetail() {
             <div
               key={show._id}
               className="bg-white rounded-xl shadow p-4 hover:shadow-xl transition cursor-pointer"
-              onClick={() => navigate("/seats", { state: { showId: show._id } })}
+              onClick={() => navigate(`/seatselection/${show._id}`)}
             >
               <p className="font-semibold">Screen {show.screenNumber}</p>
               <p className="text-gray-600">

@@ -2,7 +2,7 @@ const { request } = require("express");
 const Show = require("../models/show");
 const Cinema = require("../models/cinema");
 const Movie = require("../models/movie");
-
+const { removeExpiredReservedSeats } = require("./bookingController");
 
 exports.getShows = async (req, res) => {
   try {
@@ -34,6 +34,8 @@ exports.getShows = async (req, res) => {
 exports.getShowById = async (req, res) => {
   try {
     const { showId } = req.params;
+
+    await removeExpiredReservedSeats(showId);
 
     const show = await Show.findById(showId)
       .populate("cinemaId")
