@@ -1,5 +1,7 @@
 const { request } = require("express");
 const Show = require("../models/show");
+const Cinema = require("../models/cinema");
+const Movie = require("../models/movie");
 
 
 exports.getShows = async (req, res) => {
@@ -26,6 +28,25 @@ exports.getShows = async (req, res) => {
     res.json(shows);
   } catch (err) {
     res.status(500).json({ error: "Server Error" });
+  }
+};
+
+exports.getShowById = async (req, res) => {
+  try {
+    const { showId } = req.params;
+
+    const show = await Show.findById(showId)
+      .populate("cinemaId")
+      .populate("movieId");
+
+    if (!show) {
+      return res.status(404).json({ message: "Show not found" });
+    }
+
+    res.json(show);
+  } catch (err) {
+    console.error("Error fetching show by ID:", err.message);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
