@@ -47,6 +47,7 @@ export default function Cinema() {
           <div
             key={cinema._id}
             className="bg-white rounded-2xl shadow-md p-6 hover:shadow-xl transition cursor-pointer"
+            onClick={() => navigate("/movies", { state: { cinemaId: cinema._id } })}
           >
             <h2 className="text-xl font-semibold mb-2">{cinema.name}</h2>
             <p className="text-gray-600">{cinema.location}</p>
