@@ -1,9 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const showController = require("../controllers/showController");
+const { protect, adminOnly } = require("../middleware/authMiddleware");
 
-router.get("/", showController.getShows);
-router.post("/", showController.addShow);
+router.get("/", protect, showController.getShows);
+router.post("/", protect, adminOnly, showController.addShow);
 // router.post("/:id/reserve", showController.reserveSeats);
 
 module.exports = router;
