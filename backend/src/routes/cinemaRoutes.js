@@ -9,5 +9,6 @@ router.get("/", protect, cinemaController.getCinemas);
 router.post("/", protect, adminOnly, cinemaController.addCinema);
 router.put("/:id", protect, adminOnly, cinemaController.updateCinema);
 router.delete("/:id", protect, adminOnly, cinemaController.deleteCinema);
+router.get("/:Id", protect, cinemaController.getCinemaById);
 
 module.exports = router;

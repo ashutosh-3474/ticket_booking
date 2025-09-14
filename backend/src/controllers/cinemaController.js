@@ -67,3 +67,25 @@ exports.deleteCinema = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+
+
+exports.getCinemaById = async (req, res) => {
+  try {
+    const { Id } = req.params;
+
+    const cinema = await Cinema.findById(Id);
+    if (!cinema) {
+      return res.status(404).json({ message: "Cinema not found" });
+    }
+
+    res.json(cinema);
+  } catch (err) {
+    console.error("Error fetching cinema by ID:", err.message);
+    // Handle invalid ObjectId error
+    if (err.kind === "ObjectId") {
+      return res.status(400).json({ message: "Invalid cinema ID" });
+    }
+    res.status(500).json({ message: "Server error" });
+  }
+};

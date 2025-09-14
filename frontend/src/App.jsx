@@ -11,6 +11,8 @@ import SeatSelection from "./pages/Seatselection";
 import BookingPage from "./pages/Booking";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import AdminDashboard from "./pages/AdminDashboard";
+import MoviesAdmin from "./pages/MovieAdmin";
+import ShowAdmin from "./pages/ShowAdmin";
 import AdminRoute from "./routes/AdminProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 
@@ -73,7 +75,23 @@ function App() {
                 path="/admin/dashboard"
                 element={
                   // <AdminRoute>
-                    <AdminDashboard />
+                  <AdminDashboard />
+                  // </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/movies"
+                element={
+                  // <AdminRoute>
+                  <MoviesAdmin />
+                  // </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/shows"
+                element={
+                  // <AdminRoute>
+                  <ShowAdmin />
                   // </AdminRoute>
                 }
               />

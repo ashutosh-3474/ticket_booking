@@ -35,3 +35,28 @@ exports.addMovie = async (req, res) => {
     res.status(400).json({ error: err.message });
   }
 };
+
+
+// Update movie
+exports.updateMovie = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const movie = await Movie.findByIdAndUpdate(id, req.body, { new: true });
+    if (!movie) return res.status(404).json({ message: "Movie not found" });
+    res.json(movie);
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
+
+// Delete movie
+exports.deleteMovie = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const movie = await Movie.findByIdAndDelete(id);
+    if (!movie) return res.status(404).json({ message: "Movie not found" });
+    res.json({ message: "Movie deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Server Error", error: err.message });
+  }
+};
