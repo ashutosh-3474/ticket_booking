@@ -1,32 +1,28 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { setAuthToken } from "../services/api";
 import axios from "axios";
+import { setAuthToken } from "../services/api";
+import { API_BASE_URL } from "../config";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // <-- new loading state
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const initAuth = async () => {
-      const stored = localStorage.getItem("auth");
-      if (stored) {
-        try {
-          const parsed = JSON.parse(stored);
-          setAuthToken(parsed.token);
-          // Optional: fetch latest user data from backend
-          const res = await axios.get("/api/auth/me"); // your endpoint to get logged-in user
-          setUser(res.data.user);
-        } catch (err) {
-          console.error("Failed to fetch user", err);
-          setUser(null);
-        }
+    const stored = localStorage.getItem("auth");
+    if (stored) {
+      try {
+        const parsed = JSON.parse(stored);
+        setUser(parsed.user);
+        setAuthToken(parsed.token);
+      } catch (err) {
+        console.error("Failed to parse auth from localStorage", err);
+        setUser(null);
       }
-      setLoading(false);
-    };
-    initAuth();
+    }
+    setLoading(false);
   }, []);
 
   const login = ({ user, token }) => {
