@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
   const { user, logout, loading } = useAuth();
+  console.log("Navbar user:", user);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   if (loading) return null; // wait until auth state is ready
@@ -35,7 +36,7 @@ export default function Navbar() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="flex items-center justify-center w-10 h-10 rounded-full bg-white text-blue-600 font-bold shadow hover:bg-gray-100 transition"
               >
-                {user.name.charAt(0).toUpperCase()}
+                {(user?.name?.charAt(0) || user?.email?.charAt(0) || "?").toUpperCase()}
               </button>
 
               {/* Dropdown menu */}

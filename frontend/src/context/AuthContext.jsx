@@ -1,8 +1,6 @@
 // src/context/AuthContext.jsx
 import React, { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { setAuthToken } from "../services/api";
-import { API_BASE_URL } from "../config";
+import { jwtDecode } from "jwt-decode"; // correct import
 
 const AuthContext = createContext();
 
@@ -11,30 +9,36 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const stored = localStorage.getItem("auth");
-    if (stored) {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("user");
+    if (token) {
       try {
-        const parsed = JSON.parse(stored);
-        setUser(parsed.user);
-        setAuthToken(parsed.token);
+        const decoded = jwtDecode(token); // decode JWT to get user details
+        setUser(user);
       } catch (err) {
-        console.error("Failed to parse auth from localStorage", err);
+        console.error("Invalid token in localStorage", err);
         setUser(null);
       }
     }
     setLoading(false);
   }, []);
 
-  const login = ({ user, token }) => {
-    localStorage.setItem("auth", JSON.stringify({ user, token }));
-    setUser(user);
-    setAuthToken(token);
+  const login = ({ token , user }) => {
+    try {
+      const decoded = jwtDecode(token);
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", JSON.stringify(user));
+      setUser(user);
+    } catch (err) {
+      console.error("Failed to decode token on login", err);
+      setUser(null);
+    }
   };
 
   const logout = () => {
-    localStorage.removeItem("auth");
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setUser(null);
-    setAuthToken(null);
   };
 
   return (

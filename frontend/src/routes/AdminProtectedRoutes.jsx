@@ -1,4 +1,6 @@
-import * as jwt_decode from "jwt-decode";
+import React from "react";
+import { Navigate } from "react-router-dom";
+import  { jwtDecode }  from "jwt-decode"; // lightweight and browser-friendly
 
 export default function AdminRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -6,7 +8,7 @@ export default function AdminRoute({ children }) {
 
   let user;
   try {
-    user = jwt_decode.default(token); // <-- note the .default here
+    user = jwtDecode(token); // only decodes payload, works in browser
   } catch (err) {
     console.error("Invalid token:", err);
     return <Navigate to="/login" replace />;
