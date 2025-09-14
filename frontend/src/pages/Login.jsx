@@ -29,7 +29,12 @@ export default function Login() {
       localStorage.setItem("user", JSON.stringify(res.data))
 
       // redirect based on role (optional)
-      navigate("/cinemas")
+      console.log("user:", res.data);
+      if (res.data.role === "admin") {
+        navigate("/admin/dashboard")
+      } else {
+        navigate("/cinemas")
+      }
     } catch (err) {
       console.error("Login Error:", err.response?.data?.message || err.message)
       setError(err.response?.data?.message || "Something went wrong")

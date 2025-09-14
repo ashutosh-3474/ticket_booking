@@ -42,13 +42,18 @@ exports.signup = async (req, res) => {
 // Login
 exports.login = async (req, res) => {
   try {
-    const { email, password } = req.body;
+    // console.log("Login request body:", req.body);
+    const { email, password, role } = req.body;
 
     const user = await User.findOne({ email });
     if (!user) return res.status(400).json({ message: "No user found, please signup" });
 
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) return res.status(400).json({ message: "Invalid credentials" });
+
+    if (role && user.role !== role) {
+      return res.status(403).json({ message: "Access denied for this role" });
+    }
 
     res.json({
       _id: user._id,

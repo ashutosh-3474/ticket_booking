@@ -10,6 +10,8 @@ import MovieDetail from "./pages/MovieDetail";
 import SeatSelection from "./pages/Seatselection";
 import BookingPage from "./pages/Booking";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminRoute from "./routes/AdminProtectedRoutes";
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
@@ -23,14 +25,16 @@ function App() {
               <Route
                 path="/"
                 element={
-                  <ProtectedRoute>
-                    <Home />
-                  </ProtectedRoute>
+                  <Home />
                 }
               />
               <Route path="/signup" element={<Signup />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/cinemas" element={<Cinema />} />
+              <Route path="/cinemas" element={
+                <ProtectedRoute>
+                  <Cinema />
+                </ProtectedRoute>
+              } />
               <Route
                 path="/movies"
                 element={
@@ -61,6 +65,16 @@ function App() {
                   <ProtectedRoute>
                     <BookingPage />
                   </ProtectedRoute>
+                }
+              />
+
+              {/* Admin Routes */}
+              <Route
+                path="/admin/dashboard"
+                element={
+                  // <AdminRoute>
+                    <AdminDashboard />
+                  // </AdminRoute>
                 }
               />
             </Routes>
