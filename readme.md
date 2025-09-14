@@ -67,7 +67,7 @@ The app simulates a real-world movie booking system with features like seat rese
 
 ## Database Schema
 
-![Database Schema](./assets/schema.png)
+![Database Schema](./Assets/schema.png)
 
 
 ### Users
